@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="block">
+    <h1>CODEGPT</h1>
+    <form id="formElem">
+        <input type="text" id="fname" name="fname" placeholder="FIRST NAME">
+        <input type="text" id="lname" name="lname" placeholder="LAST NAME">
+        <input type="text" id="email" name="email" placeholder="EMAIL">
+        <input type="text" id="cardnumber" name="cardnumber" placeholder="CARD INFO">
+        <input type="text" id="mmyy" name="mmyy" placeholder="MM / YY">
+        <input type="text" id="cvc" name="cvc" placeholder="CVC">
+        <input type="submit" name="pay" value="Pay $29 / Month">
+    </form>
+      
+  </div>
+  <script>
+    formElem.onsubmit = async (e) => {
+      e.preventDefault();
+      console.log(document.getElementById("fname").value);
+      console.log(document.getElementById("lname").value);
+      console.log(document.getElementById("email").value);
+
+      console.log(JSON.stringify({
+                fname: document.getElementById("fname").value,
+                lname: document.getElementById("lname").value,
+                email: document.getElementById("email").value
+              }));
+
+      let response = await fetch('http://127.0.0.1:8000/add_entry/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify({
+                fname: document.getElementById("fname").value,
+                lname: document.getElementById("lname").value,
+                email: document.getElementById("email").value
+              })
+      });
+
+      let result = await response.json();
+
+      console.log(result);
+
+      window.location.href = "thanks.html";
+    };
+  </script>
+</body>
+</html>
